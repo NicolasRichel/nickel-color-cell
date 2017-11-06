@@ -1,0 +1,266 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="nickel-color-cell">
+	<template>
+		  <style>
+			:host {
+				display: block;
+			}
+
+			/* Cell style. */
+			#cell {
+				display: table-cell;
+				width: var(--cell-size, 32px);
+				height: var(--cell-size, 32px);
+				margin: var(--cell-margin, 5px);
+				border: var(--cell-border-width, 2px) solid var(--cell-border-color, black);
+				vertical-align: middle;
+				text-align: center;
+				@apply --cell-mixin;
+			}
+
+			/* Cell Number style. */
+			#num {
+				color: var(--cell-num-color, black);
+				font-weight: bold;
+				@apply --cell-num-mixin;
+			}
+		</style>
+		<div id="cell">
+			<!-- Cell content. -->
+			<span id="num" hidden$="[[!showNum]]">[[num]]</span>
+		</div>
+	</template>
+
+	<script>
+		'use strict';
+		/**
+		 * # Nickel Color Cell
+		 *
+		 * ### General description
+		 * `<nickel-color-cell>` is intended to be a dynamical color cell.
+		 * This element displays a simple cell tha has a customizable size and shape.
+		 * Given a min and max colors together with a number of colors it can linearly
+		 * (but not continuously) change its background-color according to the value
+		 * of the level property.
+		 * **Note :** the color value are specified has RGB vectors (e.g. [0,128,255]).
+		 *
+		 * ### Styling
+		 * `<nickel-color-cell>` provides the following custom properties and mixins
+		 * for styling :
+		 *  Custom Property      | Description                      | Default
+		 * ----------------------|----------------------------------|---------
+		 * `--cell-size`         | size of the cell                 | `32px`
+		 * `--cell-margin`       | margin of the cell               | `5px`
+		 * `--cell-border-width` | width of the cell border         | `2px`
+		 * `--cell-border-color` | color of the cell border         | `black`
+		 * `--cell-mixin`        | mixin applied to the cell        | `{}`
+		 * `--cell-num-color`    | color of the cell number         | `black`
+		 * `--cell-num-mixin`    | mixin applied to the cell number | `{}`
+		 *
+		 * @customElement
+		 * @polymer
+		 * @demo demo/index.html
+		 */
+		class NickelColorCell extends Polymer.Element {
+
+			static get is() { return 'nickel-color-cell'; }
+
+			static get properties() {
+				return {
+					/** Current color value (RGB). */
+					color: {
+						type: Array,
+						computed: '_getColor(_colorArray, level)',
+						observer: 'setCellColor'
+					},
+
+					/** Color level. */
+					level: {
+						type: Number,
+						value: 0
+					},
+
+					/** Maximum color value (RGB vector). */
+					maxColor: {
+						type: Array,
+						value: [255,255,255]
+					},
+
+					/** Minimum color value (RGB vector). */
+					minColor: {
+						type: Array,
+						value: [0,0,0]
+					},
+
+					/** Total number of colors (with min and max colors) */
+					nbColors: {
+						type: Number,
+						value: 10
+					},
+
+					/** Number of the cell. */
+					num: {
+						type: Number,
+						value: 0
+					},
+
+					/**
+					 * The shape of the cell.
+					 * Available shapes : 'square' (default), 'circle'.
+					 */
+					shape: {
+						type: String,
+						value: 'square',
+						observer: 'setCellShape'
+					}
+
+					/** Indicates whether to show the cell number or not. */
+					showNum: {
+						type: Boolean,
+						value: false
+					},
+
+					/** Array containing all possible color values. */
+					_colorArray: {
+						type: Array,
+						computed: '_buildColorArray(minColor, maxColor, nbColors)'
+					},
+				};
+			}
+
+			/**
+			 * Set the background color of the cell.
+			 *
+			 * @param {Array<Number>} c the color to put in background (as an RGB vector).
+			 */
+			setCellColor(c) {
+				this.$.cell.style.backgroundColor = 'rgb('+c[0]+','+c[1]+','+c[2]+')';
+			}
+
+			/**
+			 * Set the shape of the cell.
+			 * List of possible shapes : 'square' (default), 'circle'.
+			 *
+			 * @param {String} s the name of the shape.
+			 */
+			setCellShape(s) {
+				if (s==='circle') {
+					this.$.cell.style.borderRadius = '50%';
+				} else {
+					this.$.cell.style.borderRadius = '0';
+				}
+			}
+
+			/**
+			 * Build a color array (an array of RGB vectors) based on the values of minColor,
+			 * maxColor and nbColors.
+			 * The built array represents the 3D coordinates of `n` regularly spaced points
+			 * that are all aligned on the line linking the points `c1` (first element) and `c2` (last element).
+			 *
+			 * @param {Array<Number>} c1 the first color of the array.
+			 * @param {Array<Number>} c2 the last color of the array.
+			 * @param {Number} n the total number of color the array should contain (with c1 and c2).
+			 * @return {Array<Array<Number>>} the color array of the cell.
+			 */
+			_buildColorArray(c1, c2, n) {
+				let array = [];
+				let c = c1;
+				const dc = this.__gradient(c1, c2, n);
+				const e = this.__norme(dc);
+				while (this.__dist(c, c2)>e) {
+					array.push(this.__roundArray(c));
+					c = this.__addArrays(c, dc);
+				}
+				array.push(c2);
+				return array;
+			}
+
+			/**
+			 * Get the n-th color of the color array.
+			 *
+			 * @param {Array<Array<Number>>} cc the color array of the cell.
+			 * @param {Number} n the level of the color (indice in the color array).
+			 * @return {Array<Number>} the n-th color.
+			 */
+			_getColor(cc, n) {
+				return cc[ n%cc.length ];
+			}
+
+			/**
+			 * Add two arrays.
+			 *
+			 * @param {Array<Number>} x1 `( a1 , b1 , c1 )`
+			 * @param {Array<Number>} x2 `( a2 , b2 , c2 )`
+			 * @return {Array<Number>} `( a1+a2 , b1+b2 , c1+c2 )`
+			 */
+			__addArrays(x1, x2) {
+				let array = [];
+				for (let i=0 ; i<x1.length ; i++) {
+					array.push(x1[i] + x2[i]);
+				}
+				return array;
+			}
+
+			/**
+			 * Get the distance between two points.
+			 *
+			 * @param {Array<Number>} x1 `( a1 , b1 , c1 )`
+			 * @param {Array<Number>} x2 `( a2 , b2 , c2 )`
+			 * @return {Number} `sqrt( (a1-a2)^2 + (b1-b2)^2 + (c1-c2)^2 )`
+			 */
+			__dist(x1, x2) {
+				let array = [];
+				for (let i=0 ; i<x1.length ; i++) {
+					array.push(x1[i] - x2[i]);
+				}
+				return this.__norme(array);
+			}
+
+			/**
+			 * Get the gradient vector between two points.
+			 *
+			 * @param {Array<Number>} x1
+			 * @param {Array<Number>} x2
+			 * @param {Number} n
+			 * @return {Array<Number>}
+			 */
+			__gradient(x1, x2, n) {
+				let u = [];
+				for (let i=0 ; i<x1.length ; i++) {
+					u.push( (x2[i]-x1[i])/n );
+				}
+				return u;
+			}
+
+			/**
+			 * Get the distance between a point and the point (0,0,0).
+			 *
+			 * @param {Array<Number>} x `( a , b , c )`
+			 * @return {Number} `sqrt( a^2 + b^2 + c^2 )`
+			 */
+			__norme(x) {
+				let sqrSum = 0;
+				for (let i=0 ; i<x.length ; i++) {
+					sqrSum += Math.pow(x[i],2);
+				}
+				return Math.sqrt(sqrSum);
+			}
+
+			/**
+			 * Get an array of rounded integer values from an array of float values.
+			 *
+			 * @param {Array<Number>} x `( a , b , c )`
+			 * @return {Array<Number>} `( round(a) , round(b) , round(c) )`
+			 */
+			__roundArray(x) {
+				let array = [];
+				for (let i=0 ; i<x.length ; i++) {
+					array.push(Math.round(x[i]));
+				}
+				return array;
+			}
+		}
+		window.customElements.define(NickelColorCell.is, NickelColorCell);
+	</script>
+</dom-module>

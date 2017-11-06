@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		
+		<title>nickel-color-cell test</title>
+		
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		
+		<link rel="import" href="../nickel-color-cell.html">
+	</head>
+	<body>
+		
+		<test-fixture id="BasicTestFixture">
+			<template>
+				<nickel-color-cell></nickel-color-cell>
+			</template>
+		</test-fixture>
+		
+		<test-fixture id="CellNumberTestFixture">
+			<template>
+				<nickel-color-cell num="1" show-num></nickel-color-cell>
+			</template>
+		</test-fixture>
+		
+		<test-fixture id="MinMaxColorsTestFixture">
+			<template>
+				<nickel-color-cell min-color="[128,0,0]" max-color="[0,128,128]"></nickel-color-cell>
+			</template>
+		</test-fixture>
+		
+		<test-fixture id="NumberOfColorsTestFixture">
+			<template>
+				<nickel-color-cell min-color="[255,0,0]" max-color="[0,255,0]" nb-colors="50"></nickel-color-cell>
+			</template>
+		</test-fixture>
+		
+		<test-fixture id="ColorLevelTestFixture">
+			<template>
+				<nickel-color-cell min-color="[255,255,0]" max-color="[128,0,255]" nb-colors="16" level="3"></nickel-color-cell>
+			</template>
+		</test-fixture>
+		
+		<script>
+			suite('nickel-color-cell', function() {
+				
+				test('instantiating the element with default properties works', function() {
+					const element = fixture('BasicTestFixture');
+					assert.equal(element.num, 0);
+					assert.deepEqual(element.minColor, [0,0,0]);
+					assert.deepEqual(element.maxColor, [255,255,255]);
+					assert.equal(element.nbColors, 10);
+					assert.equal(element.level, 0);
+					assert.deepEqual(element.color, [0,0,0]);
+				});
+				
+				test('setting cell number and displaying it works', function() {
+					const element = fixture('CellNumberTestFixture');
+					assert.equal(element.num, 1);
+					const numberText = element.shadowRoot.querySelector('#num').innerHTML;
+					assert.equal(numberText, '1');
+				});
+				
+				test('setting min and max colors works', function() {
+					const element = fixture('MinMaxColorsTestFixture');
+					assert.deepEqual(element.minColor, [128,0,0]);
+					assert.deepEqual(element.maxColor, [0,128,128]);
+					assert.deepEqual(element.color, [128,0,0]);
+				});
+				
+				test('setting the number of colors works', function() {
+					const element = fixture('NumberOfColorsTestFixture');
+				});
+				
+				test('setting the color level works', function() {
+					const element = fixture('ColorLevelTestFixture');
+				});
+				
+			});
+		</script>
+		
+	</body>
+</html>

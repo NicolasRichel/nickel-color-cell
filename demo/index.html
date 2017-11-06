@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		
+		<title>nickel-color-cell demo</title>
+		
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+		<link rel="import" href="../nickel-color-cell.html">
+		
+		<custom-style>
+			<style is="custom-style" include="demo-pages-shared-styles">
+			</style>
+		</custom-style>
+	</head>
+	<body>
+		<div class="vertical-section-container centered">
+			
+			<!-- Demo 1 -->
+			<h3>Basic nickel-color-cell demo</h3>
+			<demo-snippet>
+			<style>
+				#level {
+					margin: 0 5px;
+					transform: translateY(25%);
+				}
+			</style>
+			<template>
+				<nickel-color-cell min-color="[255,0,0]" max-color="[0,0,255]"></nickel-color-cell>
+				Color Level : <input id="level" type="range" min="0" max="9" value="0" onchange="setLevel()" />
+				<script>
+					function setLevel() {
+						let levelValue = document.getElementById('level').value;
+						document.querySelector('nickel-color-cell').level = levelValue;
+					}
+				</script>
+			</template>
+			</demo-snippet>
+			
+			<!-- Demo 2 -->
+			<h3>Numbered nickel-color-cell demo</h3>
+			<demo-snippet>
+			<template>
+				<nickel-color-cell min-color="[255,255,255]" num="1" show-num></nickel-color-cell>
+			</template>
+			</demo-snippet>
+			
+			<!-- Demo 3 -->
+			<h3>Styled nickel-color-cell demo</h3>
+			<demo-snippet>
+			<template>
+				<style>
+					nickel-color-cell#styled {
+						--cell-size: 48px;
+						--cell-border-width: 4px;
+						--cell-border-color: blue;
+						--cell-num-color: white;
+					}
+				</style>
+				<nickel-color-cell id="styled" min-color="[80,128,0]" max-color="[80,128,0]" num="5" show-num></nickel-color-cell>
+			</template>
+			</demo-snippet>
+			
+			<!-- Demo 4 -->
+			<h3>Circle nickel-color-cell demo</h3>
+			<demo-snippet>
+			<template>
+				<nickel-color-cell shape="circle" min-color="[0,200,128]" num="17" show-num></nickel-color-cell>
+			</template>
+			</demo-snippet>
+			
+		</div>
+	</body>
+</html>
