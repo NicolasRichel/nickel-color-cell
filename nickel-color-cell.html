@@ -59,35 +59,6 @@ for styling :
 	</template>
 
 	<script>
-		'use strict';
-		/**
-		 * # Nickel Color Cell
-		 *
-		 * ### General description
-		 * `<nickel-color-cell>` is intended to be a dynamical color cell.
-		 * This element displays a simple cell tha has a customizable size and shape.
-		 * Given a min and max colors together with a number of colors it can linearly
-		 * (but not continuously) change its background-color according to the value
-		 * of the level property.
-		 * **Note :** the color value are specified has RGB vectors (e.g. [0,128,255]).
-		 *
-		 * ### Styling
-		 * `<nickel-color-cell>` provides the following custom properties and mixins
-		 * for styling :
-		 *  Custom Property      | Description                      | Default
-		 * ----------------------|----------------------------------|---------
-		 * `--cell-size`         | size of the cell                 | `32px`
-		 * `--cell-margin`       | margin of the cell               | `5px`
-		 * `--cell-border-width` | width of the cell border         | `2px`
-		 * `--cell-border-color` | color of the cell border         | `black`
-		 * `--cell-mixin`        | mixin applied to the cell        | `{}`
-		 * `--cell-num-color`    | color of the cell number         | `black`
-		 * `--cell-num-mixin`    | mixin applied to the cell number | `{}`
-		 *
-		 * @customElement
-		 * @polymer
-		 * @demo demo/index.html
-		 */
 		class NickelColorCell extends Polymer.Element {
 
 			static get is() { return 'nickel-color-cell'; }
