@@ -2,30 +2,32 @@
 
 <dom-module id="nickel-color-cell">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
+    <custom-style>
+      <style is="custom-style">
+        :host {
+          display: block;
+        }
 
-      /* Cell style. */
-      #cell {
-        display: table-cell;
-        width: var(--cell-size, 32px);
-        height: var(--cell-size, 32px);
-        margin: var(--cell-margin, 5px);
-        border: var(--cell-border-width, 2px) solid var(--cell-border-color, black);
-        vertical-align: middle;
-        text-align: center;
-        @apply --cell-mixin;
-      }
+        /* Cell style. */
+        #cell {
+          display: table-cell;
+          width: var(--cell-size, 32px);
+          height: var(--cell-size, 32px);
+          margin: var(--cell-margin, 5px);
+          border: var(--cell-border-width, 2px) solid var(--cell-border-color, black);
+          vertical-align: middle;
+          text-align: center;
+          @apply --cell-mixin;
+        }
 
-      /* Cell Number style. */
-      #num {
-        color: var(--cell-num-color, black);
-        font-weight: bold;
-        @apply --cell-num-mixin;
-      }
-		</style>
+        /* Cell Number style. */
+        #num {
+          color: var(--cell-num-color, black);
+          font-weight: bold;
+          @apply --cell-num-mixin;
+        }
+      </style>
+    </custom-style>
     <div id="cell">
       <!-- Cell content. -->
       <span id="num" hidden$="[[!showNum]]">[[num]]</span>
