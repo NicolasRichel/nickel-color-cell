@@ -2,6 +2,7 @@
   "name": "nickel-color-cell",
   "description": "A dynamical color cell",
   "main": "nickel-color-cell.html",
+  "license": "GPL-3.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
