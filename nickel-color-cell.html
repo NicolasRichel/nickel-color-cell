@@ -60,6 +60,7 @@
      * `--cell-num-mixin`    | mixin applied to the cell number | `{}`
      *
      * @customElement
+     * @polymer
      * @demo demo/index.html
      */
     class NickelColorCell extends Polymer.Element {
@@ -75,7 +76,7 @@
             observer: 'setCellColor'
           },
 
-          /** Color level. */
+          /** Color level (from `0` to `nbColors - 1`). */
           level: {
             type: Number,
             value: 0
@@ -145,10 +146,13 @@
        * @param {String} s the name of the shape.
        */
       setCellShape(s) {
-        if (s==='circle') {
-					this.$.cell.style.borderRadius = '50%';
-			  } else {
-          this.$.cell.style.borderRadius = '0';
+        switch(s) {
+          case 'circle':
+            this.$.cell.style.borderRadius = '50%';
+            break;
+          default:
+            this.$.cell.style.borderRadius = '0';
+            break;
         }
       }
 
