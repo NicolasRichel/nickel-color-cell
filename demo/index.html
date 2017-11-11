@@ -30,8 +30,14 @@
 				}
 			</style>
 			<template>
-				<nickel-color-cell min-color="[255,0,0]" max-color="[0,0,255]"></nickel-color-cell>
-				Color Level : <input id="level" type="range" min="0" max="9" value="0" onchange="setLevel()" />
+				<nickel-color-cell
+				  min-color="[255,0,0]"
+					max-color="[0,0,255]">
+				</nickel-color-cell>
+				Color Level :
+				<input id="level" type="range"
+				  min="0" max="9" value="0"
+					onchange="setLevel()"/>
 				<script>
 					function setLevel() {
 						let levelValue = document.getElementById('level').value;
