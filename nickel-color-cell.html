@@ -212,7 +212,7 @@ for styling :
        * @return {Array<Number>} the n-th color.
        */
       _getColor(cc, n) {
-        return cc[ n%cc.length ];
+        if (cc) return cc[ n%cc.length ];
       }
 
       /**
