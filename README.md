@@ -27,8 +27,8 @@ A dynamical color cell that is customizable and parametrized.
 -->
 ```html
 <nickel-color-cell
-  min-color="[128,128,0]"
-  max-color="[0,0,225]"
+  min-color="[149,117,205]"
+  max-color="[21,101,92]"
   nb-colors="25">
 </nickel-color-cell>
 ```
