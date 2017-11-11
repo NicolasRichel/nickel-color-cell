@@ -138,7 +138,7 @@
        * @param {Array<Number>} c the color to put in background (as an RGB vector).
        */
       setCellColor(c) {
-        this.$.cell.style.backgroundColor = 'rgb('+c[0]+','+c[1]+','+c[2]+')';
+        this.$.cell.style.backgroundColor = `rgb(${c[0]},${c[1]},${c[2]})`;
       }
 
       /**
@@ -201,11 +201,9 @@
        * @return {Array<Number>} `( a1+a2 , b1+b2 , c1+c2 )`
        */
       __addArrays(x1, x2) {
-        let array = [];
-        for (let i=0 ; i<x1.length ; i++) {
-          array.push(x1[i] + x2[i]);
-        }
-        return array;
+        return x1.map((x, i) => {
+          return x + x2[i];
+        });
       }
 
       /**
@@ -216,11 +214,9 @@
        * @return {Number} `sqrt( (a1-a2)^2 + (b1-b2)^2 + (c1-c2)^2 )`
        */
       __dist(x1, x2) {
-        let array = [];
-        for (let i=0 ; i<x1.length ; i++) {
-          array.push(x1[i] - x2[i]);
-        }
-        return this.__norme(array);
+        return this.__norme(x1.map((x, i) => {
+          return x - x2[i];
+        }));
       }
 
       /**
@@ -232,11 +228,9 @@
        * @return {Array<Number>}
        */
       __gradient(x1, x2, n) {
-        let u = [];
-        for (let i=0 ; i<x1.length ; i++) {
-          u.push( (x2[i]-x1[i])/n );
-        }
-        return u;
+        return x1.map((x, i) => {
+          return (x2[i] - x)/n;
+        });
       }
 
       /**
@@ -260,11 +254,9 @@
        * @return {Array<Number>} `( round(a) , round(b) , round(c) )`
        */
       __roundArray(x) {
-        let array = [];
-        for (let i=0 ; i<x.length ; i++) {
-          array.push(Math.round(x[i]));
-        }
-        return array;
+        return x.map((x, i) => {
+          return Math.round(x);
+        });
       }
     }
     window.customElements.define(NickelColorCell.is, NickelColorCell);
