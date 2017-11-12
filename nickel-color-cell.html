@@ -40,11 +40,11 @@
      *
      * ### General description
      * `<nickel-color-cell>` is intended to be a dynamical color cell.
-     * This element displays a simple cell tha has a customizable size and shape.
+     * This element displays a simple cell that has a customizable size and shape.
      * Given a min and max colors together with a number of colors it can linearly
      * (but not continuously) change its background-color according to the value
      * of the level property.
-     * **Note :** the color value are specified has RGB vectors (e.g. [0,128,255]).
+     * **Note :** the colors values are specified has RGB vectors (e.g. [0,128,255]).
      *
      * ### Styling
      * `<nickel-color-cell>` provides the following custom properties and mixins
@@ -158,10 +158,11 @@
       }
 
       /**
-       * Build a color array (an array of RGB vectors) based on the values of minColor,
-       * maxColor and nbColors.
+       * Build a color array (an array of RGB vectors) based on the values of `minColor`,
+       * `maxColor` and `nbColors`.
        * The built array represents the 3D coordinates of `n` regularly spaced points
-       * that are all aligned on the line linking the points `c1` (first element) and `c2` (last element).
+       * that are all aligned on the line linking the points `c1` (first element) and
+       * `c2` (last element).
        *
        * @param {Array<Number>} c1 the first color of the array.
        * @param {Array<Number>} c2 the last color of the array.

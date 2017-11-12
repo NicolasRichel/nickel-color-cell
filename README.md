@@ -1,6 +1,7 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://www.webcomponents.org/element/NicolasRichel/nickel-color-cell)
 
 # \<nickel-color-cell\>
+(built with Polymer 2.0)
 
 A dynamical color cell that is customizable and parametrized.
 
