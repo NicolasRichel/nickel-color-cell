@@ -74,13 +74,15 @@
           color: {
             type: Array,
             computed: '_getColor(_colorArray, level)',
-            observer: 'setCellColor'
+            observer: 'setCellColor',
+            notify: true
           },
 
           /** Color level (from `0` to `nbColors - 1`). */
           level: {
             type: Number,
-            value: 0
+            value: 0,
+            notify: true
           },
 
           /** Maximum color value (RGB vector). Default is `black`. */
