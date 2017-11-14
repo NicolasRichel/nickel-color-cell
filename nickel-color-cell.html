@@ -97,7 +97,7 @@
             value: [255,255,255]
           },
 
-          /** Total number of colors (with min and max colors) */
+          /** Total number of colors (with min and max colors). */
           nbColors: {
             type: Number,
             value: 10
@@ -107,6 +107,12 @@
           num: {
             type: Number,
             value: 0
+          },
+
+          /** Indicates wether the color processing should take place or not. */
+          onHold: {
+            type: Boolean,
+            value: false
           },
 
           /**
@@ -139,7 +145,7 @@
        * @param {Array<Number>} c the color to put in background (as an RGB vector).
        */
       setCellColor(c) {
-        this.$.cell.style.backgroundColor = `rgb(${c[0]},${c[1]},${c[2]})`;
+        if (!this.onHold) this.$.cell.style.backgroundColor = `rgb(${c[0]},${c[1]},${c[2]})`;
       }
 
       /**
@@ -173,14 +179,16 @@
        */
       _buildColorArray(c1, c2, n) {
         let array = [];
-        let c = c1;
-        const dc = this.__gradient(c1, c2, n);
-        const e = this.__norme(dc);
-        while (this.__dist(c, c2)>e) {
-          array.push(this.__roundArray(c));
-          c = this.__addArrays(c, dc);
+        if (!this.onHold) {
+          let c = c1;
+          const dc = this.__gradient(c1, c2, n);
+          const e = this.__norme(dc);
+          while (this.__dist(c, c2)>e) {
+            array.push(this.__roundArray(c));
+            c = this.__addArrays(c, dc);
+          }
+          array.push(c2);
         }
-        array.push(c2);
         return array;
       }
 
