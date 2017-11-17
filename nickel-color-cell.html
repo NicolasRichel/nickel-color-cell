@@ -109,7 +109,7 @@
             value: 0
           },
 
-          /** Indicates wether the color processing should take place or not. */
+          /** Indicates wether the color processing should takes place or not. */
           onHold: {
             type: Boolean,
             value: false
@@ -200,7 +200,7 @@
        * @return {Array<Number>} the n-th color.
        */
       _getColor(cc, n) {
-        if (cc) return cc[ n%cc.length ];
+        if (cc && cc.length) return cc[ n%cc.length ];
       }
 
       /**
