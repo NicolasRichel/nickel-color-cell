@@ -18,14 +18,13 @@ A dynamical color cell that is customizable and parametrized.
         setInterval(() => {
           document.querySelector('nickel-color-cell').set('level', levels[i++%9]);
         }, 1200);
+        document.getElementById('onHold').addEventListener('onchange', (e) => {
+           document.querySelector('nickel-color-cell').set('onHold', e.target.checked);
+        });
       })();
-      function setOnHold(e) {
-         document.querySelector('nickel-color-cell').set('onHold', e.target.checked);
-      }
-    }
     </script>
     <next-code-block></next-code-block>
-    <inout id="onHold" type="checkbox" onchange="setOnHold()"/> On Hold
+    <inout id="onHold" type="checkbox"/> On Hold
   </template>
 </custom-element-demo>
 ```
