@@ -12,12 +12,11 @@ A dynamical color cell that is customizable and parametrized.
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="nickel-color-cell.html"/>
     <script>
-      const levels = [0,3,6,9,12,15,18,21,24];
-      let i=0;
       (() => {
+        const levels = [0,3,6,9,12,15,18,21,24];
+        let i=0;
         setInterval(() => {
-          document.querySelector('nickel-color-cell').set('level', levels[i%9]);
-          i++;
+          document.querySelector('nickel-color-cell').set('level', levels[i++%9]);
         }, 1200);
       })();
     </script>
@@ -28,8 +27,8 @@ A dynamical color cell that is customizable and parametrized.
 -->
 ```html
 <nickel-color-cell
-  min-color="[149,117,205]"
-  max-color="[21,101,92]"
+  min-color="[255,255,0]"
+  max-color="[0,255,90]"
   nb-colors="25">
 </nickel-color-cell>
 ```
