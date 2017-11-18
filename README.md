@@ -19,8 +19,13 @@ A dynamical color cell that is customizable and parametrized.
           document.querySelector('nickel-color-cell').set('level', levels[i++%9]);
         }, 1200);
       })();
+      function setOnHold(e) {
+         document.querySelector('nickel-color-cell').set('onHold', e.target.checked);
+      }
+    }
     </script>
     <next-code-block></next-code-block>
+    <inout id="onHold" type="checkbox" onchange="setOnHold()"/> On Hold
   </template>
 </custom-element-demo>
 ```
