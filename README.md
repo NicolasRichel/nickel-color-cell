@@ -1,3 +1,6 @@
+# Polymer 2 Version (DEPRECATED)
+
+
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://www.webcomponents.org/element/NicolasRichel/nickel-color-cell)
 
 # \<nickel-color-cell\>
@@ -19,7 +22,7 @@ A dynamical color cell that is customizable and parametrized.
           document.querySelector('nickel-color-cell').set('level', levels[i++%9]);
         }, 1200);
         document.getElementById('onHold').addEventListener('onchange', (e) => {
-           document.querySelector('nickel-color-cell').set('onHold', e.target.checked);
+          document.querySelector('nickel-color-cell').set('onHold', e.target.checked);
         });
       })();
     </script>
