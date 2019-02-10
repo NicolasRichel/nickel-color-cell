@@ -74,13 +74,15 @@
           color: {
             type: Array,
             computed: '_getColor(_colorArray, level)',
-            observer: 'setCellColor'
+            observer: 'setCellColor',
+            notify: true
           },
 
           /** Color level (from `0` to `nbColors - 1`). */
           level: {
             type: Number,
-            value: 0
+            value: 0,
+            notify: true
           },
 
           /** Maximum color value (RGB vector). Default is `black`. */
@@ -95,7 +97,7 @@
             value: [255,255,255]
           },
 
-          /** Total number of colors (with min and max colors) */
+          /** Total number of colors (with min and max colors). */
           nbColors: {
             type: Number,
             value: 10
@@ -105,6 +107,12 @@
           num: {
             type: Number,
             value: 0
+          },
+
+          /** Indicates wether the color processing should takes place or not. */
+          onHold: {
+            type: Boolean,
+            value: false
           },
 
           /**
@@ -137,7 +145,7 @@
        * @param {Array<Number>} c the color to put in background (as an RGB vector).
        */
       setCellColor(c) {
-        this.$.cell.style.backgroundColor = `rgb(${c[0]},${c[1]},${c[2]})`;
+        if (!this.onHold) this.$.cell.style.backgroundColor = `rgb(${c[0]},${c[1]},${c[2]})`;
       }
 
       /**
@@ -171,14 +179,16 @@
        */
       _buildColorArray(c1, c2, n) {
         let array = [];
-        let c = c1;
-        const dc = this.__gradient(c1, c2, n);
-        const e = this.__norme(dc);
-        while (this.__dist(c, c2)>e) {
-          array.push(this.__roundArray(c));
-          c = this.__addArrays(c, dc);
+        if (!this.onHold) {
+          let c = c1;
+          const dc = this.__gradient(c1, c2, n);
+          const e = this.__norme(dc);
+          while (this.__dist(c, c2)>e) {
+            array.push(this.__roundArray(c));
+            c = this.__addArrays(c, dc);
+          }
+          array.push(c2);
         }
-        array.push(c2);
         return array;
       }
 
@@ -186,11 +196,11 @@
        * Get the n-th color of the color array.
        *
        * @param {Array<Array<Number>>} cc the color array of the cell.
-       * @param {Number} n the level of the color (indice in the color array).
+       * @param {Number} n the level of the color (index in the color array).
        * @return {Array<Number>} the n-th color.
        */
       _getColor(cc, n) {
-        if (cc) return cc[ n%cc.length ];
+        if (cc && cc.length) return cc[ n%cc.length ];
       }
 
       /**
