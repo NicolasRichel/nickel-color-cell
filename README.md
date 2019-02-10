@@ -24,7 +24,7 @@ A dynamical color cell that is customizable and parametrized.
       })();
     </script>
     <next-code-block></next-code-block>
-    <inout id="onHold" type="checkbox"/> On Hold
+    <input id="onHold" type="checkbox"/> On Hold
   </template>
 </custom-element-demo>
 ```
